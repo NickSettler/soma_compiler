@@ -91,9 +91,8 @@ LexicalToken *LexicalAnalysis::get_token() {
                     continue;
                 }
 
+                START_FALLBACK
                 token = new LexicalToken(*token_value, LEX_TOKEN_INTEGER_LITERAL);
-                state = LEX_START_STATE;
-                input_stream->unget();
                 return token;
             }
             case LEX_FLOAT_STATE: {
@@ -106,9 +105,8 @@ LexicalToken *LexicalAnalysis::get_token() {
                     throw std::runtime_error("Invalid float literal");
                 }
 
+                START_FALLBACK
                 token = new LexicalToken(*token_value, LEX_TOKEN_FLOAT_LITERAL);
-                state = LEX_START_STATE;
-                input_stream->unget();
                 return token;
             }
             default: {

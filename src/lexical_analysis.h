@@ -12,6 +12,10 @@
 #include <string>
 #include <vector>
 
+#define START_FALLBACK                                                                                                 \
+    state = LEX_START_STATE;                                                                                           \
+    input_stream->unget();
+
 typedef enum {
     LEX_START_STATE,
     LEX_OPERATOR_STATE,
