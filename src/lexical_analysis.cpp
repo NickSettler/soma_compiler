@@ -102,13 +102,14 @@ LexicalToken *LexicalAnalysis::get_token() {
                 return token;
             }
             case LEX_FLOAT_STATE: {
-                if (isdigit(c) || c == '+' || c == '-') {
+                if (isdigit(c) || c == '+' || c == '-' || c == 'e' || c == 'E' || c == '.') {
                     token_value->push_back(c);
                     continue;
                 }
 
-                if (!std::regex_match(token_value->c_str(), std::regex("([0-9]*[.eE])-?[0-9]+"))) {
-                    throw std::runtime_error("Invalid float literal");
+                if (!std::regex_match(token_value->c_str(),
+                                      std::regex(R"(^(\d+([.]\d*)?([eE][+-]?\d+)?|[.]\d+([eE][+-]?\d+)?)$)"))) {
+                    throw LexicalAnalysisError("Invalid float: %s", token_value->c_str());
                 }
 
                 START_FALLBACK
