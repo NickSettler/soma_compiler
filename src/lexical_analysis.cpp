@@ -35,30 +35,41 @@ LexicalToken *LexicalAnalysis::get_token() {
         switch (state) {
             case LEX_START_STATE: {
                 std::string char_str = std::string(1, c);
-
-                if (std::find(end.begin(), end.end(), c) != end.end()) {
-                    token = new LexicalToken("", LEX_TOKEN_EOF);
-                    return token;
-                } else if (std::find(whitespaces.begin(), whitespaces.end(), char_str) != whitespaces.end()) {
-                    break;
-                } else if (brackets.find(char_str) != brackets.end()) {
-                    token_value->push_back(c);
-                    token = new LexicalToken(char_str, brackets.find(char_str)->second);
-                    return token;
-                } else if (operators.find(char_str) != operators.end()) {
-                    token_value->push_back(c);
-                    token = new LexicalToken(char_str, operators.find(char_str)->second);
-                    return token;
-                } else {
-                    if (isdigit(c)) {
-                        token_value->push_back(c);
-                        state = LEX_INTEGER_STATE;
+                switch (c) {
+                    case ' ':
+                    case '\n':
+                    case '\t':
                         break;
-                    } else {
-                        printf("Unexpected character: %c\n", c);
-                        return nullptr;
-                    }
+                    case EOF:
+                    case '\0':
+                        token = new LexicalToken("", LEX_TOKEN_EOF);
+                        return token;
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                        token_value->push_back(c);
+                        state = LEX_OPERATOR_STATE;
+                        break;
+                    case '(':
+                    case ')':
+                    case '[':
+                    case ']':
+                    case '{':
+                    case '}':
+                        token = new LexicalToken(char_str, brackets.find(char_str)->second);
+                        return token;
+                    default:
+                        if (isdigit(c)) {
+                            token_value->push_back(c);
+                            state = LEX_INTEGER_STATE;
+                            break;
+                        } else {
+                            printf("Unexpected character: %c\n", c);
+                            return nullptr;
+                        }
                 }
+                break;
             }
             case LEX_INTEGER_STATE: {
                 if (isdigit(c)) {
