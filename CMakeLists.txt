@@ -33,6 +33,5 @@ gtest_discover_tests(tests)
 
 add_executable(
         soma
-        src/main.c
-        src/lexical_analysis.c
-        src/lexical_analysis.h)
+        src/main.cpp
+        src/lexical_analysis.cpp src/lexical_analysis.h)
