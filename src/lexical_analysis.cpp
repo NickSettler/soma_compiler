@@ -71,6 +71,16 @@ LexicalToken *LexicalAnalysis::get_token() {
                 }
                 break;
             }
+            case LEX_OPERATOR_STATE: {
+                if (c == '+' || c == '-' || c == '*' || c == '/') {
+                    token_value->push_back(c);
+                    break;
+                }
+
+                START_FALLBACK
+                token = new LexicalToken(*token_value, operators.find(*token_value)->second);
+                return token;
+            }
             case LEX_INTEGER_STATE: {
                 if (isdigit(c)) {
                     token_value->push_back(c);
