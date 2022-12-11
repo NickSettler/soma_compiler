@@ -5,6 +5,7 @@
  */
 
 #include "lexical_analysis.h"
+#include "errors.h"
 
 #include <regex>
 #include <utility>
@@ -78,6 +79,11 @@ LexicalToken *LexicalAnalysis::get_token() {
                 }
 
                 START_FALLBACK
+
+                auto operator_type = operators.find(*token_value);
+                if (operator_type == operators.end())
+                    throw LexicalAnalysisError("Unknown operator: %s", token_value->c_str());
+
                 token = new LexicalToken(*token_value, operators.find(*token_value)->second);
                 return token;
             }
