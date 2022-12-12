@@ -12,5 +12,5 @@
 LexicalAnalysisError::LexicalAnalysisError(const char *message, ...){ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE)}
 
 SyntaxAnalysisError::SyntaxAnalysisError(const char *message, ...) {
-    ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE)
+    ERROR_CONSTRUCTOR(SYNTAX_ANALYSIS_ERROR_CODE)
 }
