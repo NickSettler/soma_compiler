@@ -9,6 +9,7 @@
 
 #include <map>
 #include <string>
+#include <functional>
 
 #define GET_NEXT_TOKEN                                                                                                 \
     delete current_token;                                                                                              \
