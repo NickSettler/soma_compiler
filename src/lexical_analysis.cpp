@@ -69,7 +69,7 @@ LexicalToken *LexicalAnalysis::get_token() {
                             token_value->push_back(c);
                             state = LEX_INTEGER_STATE;
                             break;
-                        } else if (isalnum(c)) {
+                        } else if (isalpha(c)) {
                             token_value->push_back(c);
                             state = LEX_KEYWORD_IDENTIFIER_STATE;
                             break;
