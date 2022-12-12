@@ -131,6 +131,7 @@ SyntaxTree *SyntaxAnalysis::statement() {
 
     switch (current_token->get_type()) {
         case LEX_TOKEN_INTEGER_LITERAL:
+        case LEX_TOKEN_FLOAT_LITERAL:
             tree = expression(0);
             GET_NEXT_TOKEN
             break;
