@@ -18,9 +18,16 @@
 
 #define LEXICAL_ANALYSIS_ERROR_CODE 1
 
+#define SYNTAX_ANALYSIS_ERROR_CODE 2
+
 class LexicalAnalysisError : public std::exception {
 public:
     explicit LexicalAnalysisError(const char *message, ...);
+};
+
+class SyntaxAnalysisError : public std::exception {
+public:
+    explicit SyntaxAnalysisError(const char *message, ...);
 };
 
 #endif// SOMA_COMPILER_ERRORS_H
