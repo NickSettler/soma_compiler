@@ -133,7 +133,8 @@ namespace soma {
             }
 
             TEST_F(LexicalAnalysisTests, Floats) {
-                ProcessInput("1.1", {LexicalToken("1.1", LEX_TOKEN_FLOAT_LITERAL)});
+                ProcessInput("1.1;",
+                             {LexicalToken("1.1", LEX_TOKEN_FLOAT_LITERAL), LexicalToken(";", LEX_TOKEN_SEMICOLON)});
 
                 ProcessInput("1.1 2e1", {LexicalToken("1.1", LEX_TOKEN_FLOAT_LITERAL),
                                          LexicalToken("2e1", LEX_TOKEN_FLOAT_LITERAL)});
@@ -157,10 +158,12 @@ namespace soma {
             }
 
             TEST_F(LexicalAnalysisTests, Keywords) {
-                ProcessInput("const a",
-                             {LexicalToken("const", LEX_TOKEN_CONST), LexicalToken("a", LEX_TOKEN_IDENTIFIER)});
+                ProcessInput("const a;",
+                             {LexicalToken("const", LEX_TOKEN_CONST), LexicalToken("a", LEX_TOKEN_IDENTIFIER),
+                              LexicalToken(";", LEX_TOKEN_SEMICOLON)});
 
-                ProcessInput("var a", {LexicalToken("var", LEX_TOKEN_VAR), LexicalToken("a", LEX_TOKEN_IDENTIFIER)});
+                ProcessInput("var a;", {LexicalToken("var", LEX_TOKEN_VAR), LexicalToken("a", LEX_TOKEN_IDENTIFIER),
+                                        LexicalToken(";", LEX_TOKEN_SEMICOLON)});
             }
 
             TEST_F(LexicalAnalysisTests, Identifiers) {
