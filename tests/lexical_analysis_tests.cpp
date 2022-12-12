@@ -98,6 +98,8 @@ namespace soma {
             }
 
             TEST_F(LexicalAnalysisTests, Operators) {
+                ProcessInput("=", {LexicalToken("=", LEX_TOKEN_ASSIGN)});
+
                 ProcessInput("+", {LexicalToken("+", LEX_TOKEN_PLUS)});
 
                 ProcessInput("-", {LexicalToken("-", LEX_TOKEN_MINUS)});
@@ -108,9 +110,10 @@ namespace soma {
 
                 ProcessInput("/ *", {LexicalToken("/", LEX_TOKEN_DIVIDE), LexicalToken("*", LEX_TOKEN_MULTIPLY)});
 
-                ProcessInput("/ *   -  \n+",
+                ProcessInput("/ *  = -  \n+",
                              {LexicalToken("/", LEX_TOKEN_DIVIDE), LexicalToken("*", LEX_TOKEN_MULTIPLY),
-                              LexicalToken("-", LEX_TOKEN_MINUS), LexicalToken("+", LEX_TOKEN_PLUS)});
+                              LexicalToken("=", LEX_TOKEN_ASSIGN), LexicalToken("-", LEX_TOKEN_MINUS),
+                              LexicalToken("+", LEX_TOKEN_PLUS)});
 
                 EXPECT_EXIT(ProcessInput("+*+", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
                             "Unknown operator: .*");
@@ -151,6 +154,25 @@ namespace soma {
 
                 EXPECT_EXIT(ProcessInput("1.1e1.1", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
                             "Invalid float: .*");
+            }
+
+            TEST_F(LexicalAnalysisTests, Keywords) {
+                ProcessInput("const a",
+                             {LexicalToken("const", LEX_TOKEN_CONST), LexicalToken("a", LEX_TOKEN_IDENTIFIER)});
+
+                ProcessInput("var a", {LexicalToken("var", LEX_TOKEN_VAR), LexicalToken("a", LEX_TOKEN_IDENTIFIER)});
+            }
+
+            TEST_F(LexicalAnalysisTests, Identifiers) {
+                ProcessInput("abc", {LexicalToken("abc", LEX_TOKEN_IDENTIFIER)});
+
+                ProcessInput("abc_1", {LexicalToken("abc_1", LEX_TOKEN_IDENTIFIER)});
+
+                ProcessInput("abc_1_a_a2f", {LexicalToken("abc_1_a_a2f", LEX_TOKEN_IDENTIFIER)});
+
+                ProcessInput("vara", {LexicalToken("vara", LEX_TOKEN_IDENTIFIER)});
+
+                ProcessInput("const_a1", {LexicalToken("const_a1", LEX_TOKEN_IDENTIFIER)});
             }
         }// namespace
     }    // namespace tests
