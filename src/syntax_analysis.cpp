@@ -79,7 +79,8 @@ void SyntaxAnalysis::expect_token(LEXICAL_TOKEN_TYPE type) {
         return;
     }
 
-    throw SyntaxAnalysisError("Unexpected token: %s", current_token->get_value().c_str());
+    throw SyntaxAnalysisError("Unexpected token: %s. Expected: %s", current_token->get_value().c_str(),
+                              attributes.at(type).get_text().c_str());
 }
 
 SyntaxTree *SyntaxAnalysis::expression(int precedence) {
