@@ -7,5 +7,6 @@
 #include "errors.h"
 #include <cstdarg>
 #include <cstdio>
+#include <cstdlib>
 
 LexicalAnalysisError::LexicalAnalysisError(const char *message, ...) { ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE) }
