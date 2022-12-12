@@ -21,11 +21,13 @@ typedef enum {
     LEX_OPERATOR_STATE,
     LEX_INTEGER_STATE,
     LEX_FLOAT_STATE,
+    LEX_KEYWORD_IDENTIFIER_STATE,
 } LEXICAL_ANALYSIS_STATE;
 
 typedef enum {
     // System types
     LEX_TOKEN_EOF,
+    LEX_TOKEN_IDENTIFIER,
 
     // Bracket types
     LEX_TOKEN_LEFT_PARENTHESIS,
@@ -35,7 +37,8 @@ typedef enum {
     LEX_TOKEN_LEFT_CURLY_BRACKET,
     LEX_TOKEN_RIGHT_CURLY_BRACKET,
 
-    // Operator types
+    // Arithmetic operator types
+    LEX_TOKEN_ASSIGN,
     LEX_TOKEN_PLUS,
     LEX_TOKEN_MINUS,
     LEX_TOKEN_MULTIPLY,
@@ -44,6 +47,10 @@ typedef enum {
     // Literal types
     LEX_TOKEN_INTEGER_LITERAL,
     LEX_TOKEN_FLOAT_LITERAL,
+
+    // Keyword types
+    LEX_TOKEN_CONST,
+    LEX_TOKEN_VAR,
 } LEXICAL_TOKEN_TYPE;
 
 const std::vector<std::string> whitespaces = {" ", "\t", "\n"};
@@ -57,10 +64,13 @@ const std::map<std::string, LEXICAL_TOKEN_TYPE> brackets = {
 };
 
 const std::map<std::string, LEXICAL_TOKEN_TYPE> operators = {
-        {"+", LEX_TOKEN_PLUS},
-        {"-", LEX_TOKEN_MINUS},
-        {"*", LEX_TOKEN_MULTIPLY},
-        {"/", LEX_TOKEN_DIVIDE},
+        {"=", LEX_TOKEN_ASSIGN},   {"+", LEX_TOKEN_PLUS},   {"-", LEX_TOKEN_MINUS},
+        {"*", LEX_TOKEN_MULTIPLY}, {"/", LEX_TOKEN_DIVIDE},
+};
+
+const std::map<std::string, LEXICAL_TOKEN_TYPE> keywords = {
+        {"const", LEX_TOKEN_CONST},
+        {"var", LEX_TOKEN_VAR},
 };
 
 class LexicalToken {

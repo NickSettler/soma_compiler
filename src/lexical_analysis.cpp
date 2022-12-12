@@ -49,6 +49,7 @@ LexicalToken *LexicalAnalysis::get_token() {
                     case '-':
                     case '*':
                     case '/':
+                    case '=':
                         token_value->push_back(c);
                         state = LEX_OPERATOR_STATE;
                         break;
@@ -65,15 +66,18 @@ LexicalToken *LexicalAnalysis::get_token() {
                             token_value->push_back(c);
                             state = LEX_INTEGER_STATE;
                             break;
+                        } else if (isalnum(c)) {
+                            token_value->push_back(c);
+                            state = LEX_KEYWORD_IDENTIFIER_STATE;
+                            break;
                         } else {
-                            printf("Unexpected character: %c\n", c);
-                            return nullptr;
+                            throw LexicalAnalysisError("Unexpected character: %c", c);
                         }
                 }
                 break;
             }
             case LEX_OPERATOR_STATE: {
-                if (c == '+' || c == '-' || c == '*' || c == '/') {
+                if (c == '+' || c == '-' || c == '*' || c == '/' || c == '=') {
                     token_value->push_back(c);
                     break;
                 }
@@ -84,7 +88,7 @@ LexicalToken *LexicalAnalysis::get_token() {
                 if (operator_type == operators.end())
                     throw LexicalAnalysisError("Unknown operator: %s", token_value->c_str());
 
-                token = new LexicalToken(*token_value, operators.find(*token_value)->second);
+                token = new LexicalToken(*token_value, operator_type->second);
                 return token;
             }
             case LEX_INTEGER_STATE: {
@@ -114,6 +118,19 @@ LexicalToken *LexicalAnalysis::get_token() {
 
                 START_FALLBACK
                 token = new LexicalToken(*token_value, LEX_TOKEN_FLOAT_LITERAL);
+                return token;
+            }
+            case LEX_KEYWORD_IDENTIFIER_STATE: {
+                if (isalnum(c) || c == '_') {
+                    token_value->push_back(c);
+                    continue;
+                }
+
+                START_FALLBACK
+
+                auto keyword = keywords.find(*token_value);
+                token = new LexicalToken(*token_value,
+                                         keyword == keywords.end() ? LEX_TOKEN_IDENTIFIER : keyword->second);
                 return token;
             }
             default: {
