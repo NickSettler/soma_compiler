@@ -9,4 +9,8 @@
 #include <cstdio>
 #include <cstdlib>
 
-LexicalAnalysisError::LexicalAnalysisError(const char *message, ...) { ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE) }
+LexicalAnalysisError::LexicalAnalysisError(const char *message, ...){ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE)}
+
+SyntaxAnalysisError::SyntaxAnalysisError(const char *message, ...) {
+    ERROR_CONSTRUCTOR(LEXICAL_ANALYSIS_ERROR_CODE)
+}
