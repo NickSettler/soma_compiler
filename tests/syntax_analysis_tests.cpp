@@ -85,6 +85,18 @@ namespace soma {
                                 {SYN_NODE_SEQUENCE, SYN_NODE_INTEGER_LITERAL, SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL,
                                  SYN_NODE_ADD, SYN_NODE_INTEGER_LITERAL, SYN_NODE_DIV, SYN_NODE_INTEGER_LITERAL,
                                  SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL});
+
+                EXPECT_EXIT(CheckSyntaxTree("1 + 2", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Unexpected token: . Expected: ;");
+
+                EXPECT_EXIT(CheckSyntaxTree("1 +", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Expected expression but found:.*");
+
+                EXPECT_EXIT(CheckSyntaxTree("1 + (", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Expected expression but found:");
+
+                EXPECT_EXIT(CheckSyntaxTree("1 + (2))", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Unexpected token: ). Expected: ;");
             }
 
             TEST_F(SyntaxAnalysisTests, Assignment) {
