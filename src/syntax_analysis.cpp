@@ -144,7 +144,7 @@ SyntaxTree *SyntaxAnalysis::statement() {
 SyntaxTree *SyntaxAnalysis::build_tree() {
     GET_NEXT_TOKEN
 
-    auto *tree = new SyntaxTree(SYN_NODE_SEQUENCE, nullptr, nullptr);
+    SyntaxTree *tree = nullptr;
 
     while (current_token != nullptr && current_token->get_type() != LEX_TOKEN_EOF) {
         tree = new SyntaxTree(SYN_NODE_SEQUENCE, tree, statement());
