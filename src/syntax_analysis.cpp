@@ -54,6 +54,19 @@ SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, SyntaxTree *left, SyntaxT
     this->right = right;
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "misc-no-recursion"
+void SyntaxTree::process_tree_using(const std::function<void(SyntaxTree *)> &function, TRAVERSAL_TYPE traversal_type) {
+    if (this == nullptr) return;
+
+    if (traversal_type == PREORDER) function(this);
+    if (this->left != nullptr) this->left->process_tree_using(function, traversal_type);
+    if (traversal_type == INORDER) function(this);
+    if (this->right != nullptr) this->right->process_tree_using(function, traversal_type);
+    if (traversal_type == POSTORDER) function(this);
+}
+#pragma clang diagnostic pop
+
 SyntaxAnalysis::SyntaxAnalysis(LexicalAnalysis *lexical_analysis)
     : current_token(nullptr), lexical_analysis(lexical_analysis) {}
 

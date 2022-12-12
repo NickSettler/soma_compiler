@@ -52,6 +52,12 @@ public:
     SYNTAX_ANALYSIS_NODE_TYPE get_type() const;
 };
 
+typedef enum {
+    PREORDER,
+    INORDER,
+    POSTORDER,
+} TRAVERSAL_TYPE;
+
 class SyntaxTree {
 public:
     SYNTAX_ANALYSIS_NODE_TYPE type;
@@ -60,7 +66,10 @@ public:
     SyntaxTree *right;
 
     SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, std::string *value);
+
     SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, SyntaxTree *left, SyntaxTree *right);
+
+    void process_tree_using(const std::function<void(SyntaxTree *)> &function, TRAVERSAL_TYPE traversal_type);
 };
 
 class SyntaxAnalysis {
