@@ -10,10 +10,12 @@
 
 std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_EOF, SyntaxAnalysisAttribute("EOF", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
-        {LEX_TOKEN_PLUS, SyntaxAnalysisAttribute("+", true, true, 7, SYN_NODE_PLUS)},
-        {LEX_TOKEN_MINUS, SyntaxAnalysisAttribute("-", true, true, 7, SYN_NODE_MINUS)},
-        {LEX_TOKEN_MULTIPLY, SyntaxAnalysisAttribute("*", true, false, 8, SYN_NODE_MULTIPLY)},
-        {LEX_TOKEN_DIVIDE, SyntaxAnalysisAttribute("/", true, false, 8, SYN_NODE_DIVIDE)},
+        {LEX_TOKEN_LEFT_PARENTHESIS, SyntaxAnalysisAttribute("(", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_RIGHT_PARENTHESIS, SyntaxAnalysisAttribute(")", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_PLUS, SyntaxAnalysisAttribute("+", true, true, 7, SYN_NODE_ADD)},
+        {LEX_TOKEN_MINUS, SyntaxAnalysisAttribute("-", true, true, 7, SYN_NODE_SUB)},
+        {LEX_TOKEN_MULTIPLY, SyntaxAnalysisAttribute("*", true, false, 8, SYN_NODE_MUL)},
+        {LEX_TOKEN_DIVIDE, SyntaxAnalysisAttribute("/", true, false, 8, SYN_NODE_DIV)},
         {LEX_TOKEN_INTEGER_LITERAL,
          SyntaxAnalysisAttribute("INTEGER_LITERAL", false, false, -1, SYN_NODE_INTEGER_LITERAL)},
         {LEX_TOKEN_FLOAT_LITERAL, SyntaxAnalysisAttribute("FLOAT_LITERAL", false, false, -1, SYN_NODE_FLOAT_LITERAL)},
@@ -44,6 +46,7 @@ SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, std::string *value) {
     this->left = nullptr;
     this->right = nullptr;
 }
+
 SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, SyntaxTree *left, SyntaxTree *right) {
     this->type = type;
     this->value = nullptr;
@@ -68,6 +71,9 @@ SyntaxTree *SyntaxAnalysis::expression(int precedence) {
     SYNTAX_ANALYSIS_NODE_TYPE op;
 
     switch (current_token->get_type()) {
+        case LEX_TOKEN_LEFT_PARENTHESIS:
+            x = parenthesis_expression();
+            break;
         case LEX_TOKEN_INTEGER_LITERAL:
             x = new SyntaxTree(SYN_NODE_INTEGER_LITERAL, new std::string(current_token->get_value()));
             GET_NEXT_TOKEN
@@ -93,6 +99,14 @@ SyntaxTree *SyntaxAnalysis::expression(int precedence) {
     }
 
     return x;
+}
+
+SyntaxTree *SyntaxAnalysis::parenthesis_expression() {
+    this->expect_token(LEX_TOKEN_LEFT_PARENTHESIS);
+    auto *tree = expression(0);
+    this->expect_token(LEX_TOKEN_RIGHT_PARENTHESIS);
+
+    return tree;
 }
 
 SyntaxTree *SyntaxAnalysis::statement() {

@@ -19,10 +19,10 @@ typedef enum {
     SYN_NODE_SEQUENCE,
 
     // Operator types
-    SYN_NODE_PLUS,
-    SYN_NODE_MINUS,
-    SYN_NODE_MULTIPLY,
-    SYN_NODE_DIVIDE,
+    SYN_NODE_ADD,
+    SYN_NODE_SUB,
+    SYN_NODE_MUL,
+    SYN_NODE_DIV,
 
     // Literal types
     SYN_NODE_INTEGER_LITERAL,
@@ -74,6 +74,8 @@ public:
     explicit SyntaxAnalysis(LexicalAnalysis *lexical_analysis);
 
     SyntaxTree *expression(int precedence);
+
+    SyntaxTree *parenthesis_expression();
 
     SyntaxTree *statement();
 
