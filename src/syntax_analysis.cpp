@@ -10,6 +10,8 @@
 
 std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_EOF, SyntaxAnalysisAttribute("EOF", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_SEMICOLON, SyntaxAnalysisAttribute(";", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_IDENTIFIER, SyntaxAnalysisAttribute("ID", false, false, -1, SYN_NODE_IDENTIFIER)},
         {LEX_TOKEN_LEFT_PARENTHESIS, SyntaxAnalysisAttribute("(", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
         {LEX_TOKEN_RIGHT_PARENTHESIS, SyntaxAnalysisAttribute(")", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
         {LEX_TOKEN_ASSIGN, SyntaxAnalysisAttribute("=", false, false, -1, SYN_NODE_ASSIGNMENT)},
@@ -20,6 +22,8 @@ std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_INTEGER_LITERAL,
          SyntaxAnalysisAttribute("INTEGER_LITERAL", false, false, -1, SYN_NODE_INTEGER_LITERAL)},
         {LEX_TOKEN_FLOAT_LITERAL, SyntaxAnalysisAttribute("FLOAT_LITERAL", false, false, -1, SYN_NODE_FLOAT_LITERAL)},
+        {LEX_TOKEN_CONST, SyntaxAnalysisAttribute("CONST_KEYWORD", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_VAR, SyntaxAnalysisAttribute("VAR_KEYWORD", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
 };
 
 SyntaxAnalysisAttribute::SyntaxAnalysisAttribute(std::string text, bool is_binary_operator, bool is_unary_operator,
