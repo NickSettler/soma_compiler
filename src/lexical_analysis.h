@@ -28,6 +28,7 @@ typedef enum {
     // System types
     LEX_TOKEN_EOF,
     LEX_TOKEN_IDENTIFIER,
+    LEX_TOKEN_SEMICOLON,
 
     // Bracket types
     LEX_TOKEN_LEFT_PARENTHESIS,

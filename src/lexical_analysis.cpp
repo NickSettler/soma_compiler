@@ -45,6 +45,9 @@ LexicalToken *LexicalAnalysis::get_token() {
                     case '\0':
                         token = new LexicalToken("", LEX_TOKEN_EOF);
                         return token;
+                    case ';':
+                        token = new LexicalToken(char_str, LEX_TOKEN_SEMICOLON);
+                        return token;
                     case '+':
                     case '-':
                     case '*':
