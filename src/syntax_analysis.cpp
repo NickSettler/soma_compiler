@@ -12,6 +12,7 @@ std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_EOF, SyntaxAnalysisAttribute("EOF", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
         {LEX_TOKEN_LEFT_PARENTHESIS, SyntaxAnalysisAttribute("(", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
         {LEX_TOKEN_RIGHT_PARENTHESIS, SyntaxAnalysisAttribute(")", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
+        {LEX_TOKEN_ASSIGN, SyntaxAnalysisAttribute("=", false, false, -1, SYN_NODE_ASSIGNMENT)},
         {LEX_TOKEN_PLUS, SyntaxAnalysisAttribute("+", true, true, 7, SYN_NODE_ADD)},
         {LEX_TOKEN_MINUS, SyntaxAnalysisAttribute("-", true, true, 7, SYN_NODE_SUB)},
         {LEX_TOKEN_MULTIPLY, SyntaxAnalysisAttribute("*", true, false, 8, SYN_NODE_MUL)},
@@ -132,10 +133,21 @@ SyntaxTree *SyntaxAnalysis::statement() {
             tree = expression(0);
             GET_NEXT_TOKEN
             break;
-        case LEX_TOKEN_FLOAT_LITERAL:
-            tree = expression(0);
+        case LEX_TOKEN_CONST:
+        case LEX_TOKEN_VAR: {
+            bool is_constant = current_token->get_type() == LEX_TOKEN_CONST;
             GET_NEXT_TOKEN
+
+            v = new SyntaxTree(SYN_NODE_IDENTIFIER, new std::string(current_token->get_value()));
+            
+            expect_token(LEX_TOKEN_IDENTIFIER);
+            expect_token(LEX_TOKEN_ASSIGN);
+
+            tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
+            if (is_constant) tree->attributes |= SYN_TREE_ATTR_CONSTANT;
+
             break;
+        }
         default:
             throw SyntaxAnalysisError("Expected statement but found: %s", current_token->get_value().c_str());
     }

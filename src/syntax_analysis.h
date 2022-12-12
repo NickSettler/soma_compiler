@@ -18,6 +18,8 @@
 typedef enum {
     // System types
     SYN_NODE_SEQUENCE,
+    SYN_NODE_IDENTIFIER,
+    SYN_NODE_ASSIGNMENT,
 
     // Operator types
     SYN_NODE_ADD,
