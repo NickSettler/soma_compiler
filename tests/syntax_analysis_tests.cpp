@@ -86,6 +86,27 @@ namespace soma {
                                  SYN_NODE_ADD, SYN_NODE_INTEGER_LITERAL, SYN_NODE_DIV, SYN_NODE_INTEGER_LITERAL,
                                  SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL});
             }
+
+            TEST_F(SyntaxAnalysisTests, Assignment) {
+                CheckSyntaxTree("var a = 1;", {SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER, SYN_NODE_ASSIGNMENT,
+                                               SYN_NODE_INTEGER_LITERAL});
+
+                CheckSyntaxTree("const ball = 1 * 2;",
+                                {SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER, SYN_NODE_ASSIGNMENT, SYN_NODE_INTEGER_LITERAL,
+                                 SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL});
+
+                EXPECT_EXIT(CheckSyntaxTree("const ", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Unexpected token: . Expected: ID");
+
+                EXPECT_EXIT(CheckSyntaxTree("const abc", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Unexpected token: . Expected: =");
+
+                EXPECT_EXIT(CheckSyntaxTree("const abc =", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Expected expression but found: ");
+
+                EXPECT_EXIT(CheckSyntaxTree("const abc = 1", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
+                            "Unexpected token: . Expected: ;");
+            }
         }// namespace
     }    // namespace tests
 }// namespace soma
