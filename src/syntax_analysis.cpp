@@ -133,7 +133,7 @@ SyntaxTree *SyntaxAnalysis::statement() {
         case LEX_TOKEN_INTEGER_LITERAL:
         case LEX_TOKEN_FLOAT_LITERAL:
             tree = expression(0);
-            GET_NEXT_TOKEN
+            expect_token(LEX_TOKEN_SEMICOLON);
             break;
         case LEX_TOKEN_CONST:
         case LEX_TOKEN_VAR: {
@@ -141,13 +141,14 @@ SyntaxTree *SyntaxAnalysis::statement() {
             GET_NEXT_TOKEN
 
             v = new SyntaxTree(SYN_NODE_IDENTIFIER, new std::string(current_token->get_value()));
-            
+
             expect_token(LEX_TOKEN_IDENTIFIER);
             expect_token(LEX_TOKEN_ASSIGN);
 
             tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
             if (is_constant) tree->attributes |= SYN_TREE_ATTR_CONSTANT;
 
+            expect_token(LEX_TOKEN_SEMICOLON);
             break;
         }
         default:
