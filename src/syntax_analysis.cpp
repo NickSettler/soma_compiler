@@ -45,6 +45,7 @@ SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, std::string *value) {
     this->value = value;
     this->left = nullptr;
     this->right = nullptr;
+    this->attributes = SYN_TREE_ATTR_NONE;
 }
 
 SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, SyntaxTree *left, SyntaxTree *right) {
@@ -52,6 +53,7 @@ SyntaxTree::SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, SyntaxTree *left, SyntaxT
     this->value = nullptr;
     this->left = left;
     this->right = right;
+    this->attributes = SYN_TREE_ATTR_NONE;
 }
 
 #pragma clang diagnostic push
