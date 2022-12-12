@@ -18,6 +18,8 @@
 typedef enum {
     // System types
     SYN_NODE_SEQUENCE,
+    SYN_NODE_IDENTIFIER,
+    SYN_NODE_ASSIGNMENT,
 
     // Operator types
     SYN_NODE_ADD,
@@ -59,12 +61,30 @@ typedef enum {
     POSTORDER,
 } TRAVERSAL_TYPE;
 
+typedef enum : unsigned int {
+    SYN_TREE_ATTR_NONE = 0x00,
+    SYN_TREE_ATTR_CONSTANT = 0x01,
+} SYN_TREE_ATTRIBUTE;
+
+inline constexpr SYN_TREE_ATTRIBUTE operator&(SYN_TREE_ATTRIBUTE a, SYN_TREE_ATTRIBUTE b) {
+    return static_cast<SYN_TREE_ATTRIBUTE>(static_cast<unsigned int>(a) & static_cast<unsigned int>(b));
+}
+
+inline constexpr SYN_TREE_ATTRIBUTE operator|(SYN_TREE_ATTRIBUTE a, SYN_TREE_ATTRIBUTE b) {
+    return static_cast<SYN_TREE_ATTRIBUTE>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
+}
+
+inline constexpr SYN_TREE_ATTRIBUTE operator|=(SYN_TREE_ATTRIBUTE &a, SYN_TREE_ATTRIBUTE b) { return a = a | b; }
+
+inline constexpr SYN_TREE_ATTRIBUTE operator&=(SYN_TREE_ATTRIBUTE &a, SYN_TREE_ATTRIBUTE b) { return a = a & b; }
+
 class SyntaxTree {
 public:
     SYNTAX_ANALYSIS_NODE_TYPE type;
     std::string *value;
     SyntaxTree *left;
     SyntaxTree *right;
+    SYN_TREE_ATTRIBUTE attributes;
 
     SyntaxTree(SYNTAX_ANALYSIS_NODE_TYPE type, std::string *value);
 
