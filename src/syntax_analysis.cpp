@@ -130,6 +130,10 @@ SyntaxTree *SyntaxAnalysis::statement() {
             tree = expression(0);
             GET_NEXT_TOKEN
             break;
+        case LEX_TOKEN_FLOAT_LITERAL:
+            tree = expression(0);
+            GET_NEXT_TOKEN
+            break;
         default:
             throw SyntaxAnalysisError("Expected statement but found: %s", current_token->get_value().c_str());
     }
