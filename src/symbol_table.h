@@ -48,26 +48,37 @@ typedef enum {
 } SYN_TABLE_COMPARATOR_FLAG;
 
 class SymbolTableTreeNode {
-private:
+public:
     std::string *key;
     SymbolTableTreeData *data;
     SymbolTableTreeNode *left;
     SymbolTableTreeNode *right;
 
-    static SYN_TABLE_COMPARATOR_FLAG comparator(std::string *a, std::string *b);
-
-public:
     explicit SymbolTableTreeNode(std::string *key);
 
     ~SymbolTableTreeNode();
+};
+
+class SymbolTableTree {
+private:
+    SymbolTableTreeNode *root = nullptr;
+
+    static SYN_TABLE_COMPARATOR_FLAG comparator(std::string *a, std::string *b);
+
+    SymbolTableTreeNode *find(std::string *search_key, SymbolTableTreeNode *node);
+
+    SymbolTableTreeNode *insert(std::string *insert_key, SymbolTableTreeNode *node);
+
+    void remove(std::string *remove_key, SymbolTableTreeNode *node);
+
+public:
+    ~SymbolTableTree();
 
     SymbolTableTreeNode *find(std::string *search_key);
 
     SymbolTableTreeNode *insert(std::string *insert_key);
 
-    SymbolTableTreeNode *remove(std::string *remove_key);
-
-    SymbolTableTreeData *get_data() const;
+    void remove(std::string *remove_key);
 };
 
 #endif// SOMA_COMPILER_SYMBOL_TABLE_H
