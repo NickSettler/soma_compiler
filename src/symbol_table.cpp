@@ -34,9 +34,17 @@ SymbolTableTreeNode *SymbolTableTreeNode::find(std::string *search_key) {
     if (comp == SYN_TABLE_COMP_OP_EQ) {
         return this;
     } else if (comp == SYN_TABLE_COMP_OP_LT) {
-        return this->left->find(search_key);
+        if(this->left != nullptr) {
+            return this->left->find(search_key);
+        } else {
+            return nullptr;
+        }
     } else {
-        return this->right->find(search_key);
+        if(this->right != nullptr) {
+            return this->right->find(search_key);
+        } else {
+            return nullptr;
+        }
     }
 }
 
