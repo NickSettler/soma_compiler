@@ -96,11 +96,14 @@ SyntaxTree *SyntaxAnalysis::expression(int precedence) {
             x = parenthesis_expression();
             break;
         case LEX_TOKEN_INTEGER_LITERAL:
-            x = new SyntaxTree(SYN_NODE_INTEGER_LITERAL, new std::string(current_token->get_value()));
+        case LEX_TOKEN_FLOAT_LITERAL: {
+            SYNTAX_ANALYSIS_NODE_TYPE type = attributes.at(current_token->get_type()).get_type();
+            x = new SyntaxTree(type, new std::string(current_token->get_value()));
             GET_NEXT_TOKEN
             break;
-        case LEX_TOKEN_FLOAT_LITERAL:
-            x = new SyntaxTree(SYN_NODE_FLOAT_LITERAL, new std::string(current_token->get_value()));
+        }
+        case LEX_TOKEN_IDENTIFIER:
+            x = new SyntaxTree(SYN_NODE_IDENTIFIER, new std::string(current_token->get_value()));
             GET_NEXT_TOKEN
             break;
         default:
