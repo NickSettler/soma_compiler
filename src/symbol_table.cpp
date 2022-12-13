@@ -8,6 +8,8 @@
 
 #include <utility>
 
+SymbolTableTreeNode *global_symbol_table = nullptr;
+
 SymbolTableTreeNode::SymbolTableTreeNode(std::string *key) {
     this->key = key;
     this->data = new SymbolTableTreeData();
@@ -39,6 +41,11 @@ SymbolTableTreeNode *SymbolTableTreeNode::find(std::string *search_key) {
 }
 
 SymbolTableTreeNode *SymbolTableTreeNode::insert(std::string *insert_key) {
+    if (global_symbol_table == nullptr) {
+        global_symbol_table = new SymbolTableTreeNode(insert_key);
+        return this;
+    }
+
     auto comp = comparator(insert_key, this->key);
 
     if (comp == SYN_TABLE_COMP_OP_EQ) {
