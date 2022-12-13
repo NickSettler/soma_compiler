@@ -107,6 +107,15 @@ namespace soma {
                                 {SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER, SYN_NODE_ASSIGNMENT, SYN_NODE_INTEGER_LITERAL,
                                  SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL});
 
+                CheckSyntaxTree("const a = 1 + 2;"
+                                "const b = a * 3;"
+                                "const c = b + a;",
+                                {SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER, SYN_NODE_ASSIGNMENT, SYN_NODE_INTEGER_LITERAL,
+                                 SYN_NODE_ADD, SYN_NODE_INTEGER_LITERAL, SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER,
+                                 SYN_NODE_ASSIGNMENT, SYN_NODE_IDENTIFIER, SYN_NODE_MUL, SYN_NODE_INTEGER_LITERAL,
+                                 SYN_NODE_SEQUENCE, SYN_NODE_IDENTIFIER, SYN_NODE_ASSIGNMENT, SYN_NODE_IDENTIFIER,
+                                 SYN_NODE_ADD, SYN_NODE_IDENTIFIER});
+
                 EXPECT_EXIT(CheckSyntaxTree("const ", {}), ::testing::ExitedWithCode(SYNTAX_ANALYSIS_ERROR_CODE),
                             "Unexpected token: . Expected: ID");
 
