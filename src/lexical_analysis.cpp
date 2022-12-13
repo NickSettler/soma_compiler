@@ -5,7 +5,7 @@
  */
 
 #include "lexical_analysis.h"
-#include "errors.h"
+#include "util/errors.h"
 
 #include <regex>
 #include <utility>

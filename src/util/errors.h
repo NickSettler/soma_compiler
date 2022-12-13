@@ -8,6 +8,9 @@
 #define SOMA_COMPILER_ERRORS_H
 
 #include <exception>
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
 
 #define ERROR_CONSTRUCTOR(code)                                                                                        \
     va_list args;                                                                                                      \
@@ -16,18 +19,17 @@
     va_end(args);                                                                                                      \
     exit(code);
 
+#define CREATE_EXCEPTION(name, code)                                                                                   \
+    class name : public std::exception {                                                                               \
+    public:                                                                                                            \
+        explicit name(const char *message, ...) { ERROR_CONSTRUCTOR(code) }                                            \
+    };
+
 #define LEXICAL_ANALYSIS_ERROR_CODE 1
 
 #define SYNTAX_ANALYSIS_ERROR_CODE 2
 
-class LexicalAnalysisError : public std::exception {
-public:
-    explicit LexicalAnalysisError(const char *message, ...);
-};
-
-class SyntaxAnalysisError : public std::exception {
-public:
-    explicit SyntaxAnalysisError(const char *message, ...);
-};
+CREATE_EXCEPTION(LexicalAnalysisError, LEXICAL_ANALYSIS_ERROR_CODE)
+CREATE_EXCEPTION(SyntaxAnalysisError, SYNTAX_ANALYSIS_ERROR_CODE)
 
 #endif// SOMA_COMPILER_ERRORS_H

@@ -6,7 +6,7 @@
 
 #include "syntax_analysis.h"
 #include "lexical_analysis.h"
-#include "errors.h"
+#include "util/errors.h"
 
 std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_EOF, SyntaxAnalysisAttribute("EOF", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},

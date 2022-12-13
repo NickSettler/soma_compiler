@@ -6,7 +6,6 @@
 
 #include <gtest/gtest.h>
 
-#include "../src/errors.cpp"
 #include "../src/lexical_analysis.cpp"
 
 namespace soma {
