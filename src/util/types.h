@@ -1,0 +1,40 @@
+/**
+ * Global predefined types
+ * @file: types.h
+ * @date: 13.12.2022
+ */
+
+#ifndef SOMA_COMPILER_TYPES_H
+#define SOMA_COMPILER_TYPES_H
+
+typedef enum {
+    // System types
+    LEX_TOKEN_EOF,
+    LEX_TOKEN_IDENTIFIER,
+    LEX_TOKEN_SEMICOLON,
+
+    // Bracket types
+    LEX_TOKEN_LEFT_PARENTHESIS,
+    LEX_TOKEN_RIGHT_PARENTHESIS,
+    LEX_TOKEN_LEFT_SQUARE_BRACKET,
+    LEX_TOKEN_RIGHT_SQUARE_BRACKET,
+    LEX_TOKEN_LEFT_CURLY_BRACKET,
+    LEX_TOKEN_RIGHT_CURLY_BRACKET,
+
+    // Arithmetic operator types
+    LEX_TOKEN_ASSIGN,
+    LEX_TOKEN_PLUS,
+    LEX_TOKEN_MINUS,
+    LEX_TOKEN_MULTIPLY,
+    LEX_TOKEN_DIVIDE,
+
+    // Literal types
+    LEX_TOKEN_INTEGER_LITERAL,
+    LEX_TOKEN_FLOAT_LITERAL,
+
+    // Keyword types
+    LEX_TOKEN_CONST,
+    LEX_TOKEN_VAR,
+} LEXICAL_TOKEN_TYPE;
+
+#endif// SOMA_COMPILER_TYPES_H

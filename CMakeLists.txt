@@ -35,6 +35,7 @@ add_executable(
         soma
         src/main.cpp
         src/util/enum.h
+        src/util/types.h
         src/lexical_analysis.cpp src/lexical_analysis.h
         src/errors.cpp src/errors.h
         src/syntax_analysis.cpp src/syntax_analysis.h

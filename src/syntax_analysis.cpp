@@ -4,8 +4,8 @@
  * @date: 12.12.2022
  */
 
-#include "lexical_analysis.h"
 #include "syntax_analysis.h"
+#include "lexical_analysis.h"
 #include "errors.h"
 
 std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {

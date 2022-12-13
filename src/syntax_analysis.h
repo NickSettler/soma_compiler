@@ -11,6 +11,7 @@
 #include <string>
 #include <functional>
 #include "util/enum.h"
+#include "util/types.h"
 
 #define GET_NEXT_TOKEN                                                                                                 \
     delete current_token;                                                                                              \
@@ -83,6 +84,10 @@ public:
 
     void process_tree_using(const std::function<void(SyntaxTree *)> &function, TRAVERSAL_TYPE traversal_type);
 };
+
+class LexicalAnalysis;
+
+class LexicalToken;
 
 class SyntaxAnalysis {
 private:
