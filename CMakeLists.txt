@@ -34,6 +34,8 @@ gtest_discover_tests(tests)
 add_executable(
         soma
         src/main.cpp
+        src/util/enum.h
         src/lexical_analysis.cpp src/lexical_analysis.h
         src/errors.cpp src/errors.h
-        src/syntax_analysis.cpp src/syntax_analysis.h)
+        src/syntax_analysis.cpp src/syntax_analysis.h
+        src/symbol_table.cpp src/symbol_table.h)
