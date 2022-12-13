@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <functional>
+#include "util/enum.h"
 
 #define GET_NEXT_TOKEN                                                                                                 \
     delete current_token;                                                                                              \
@@ -61,22 +62,12 @@ typedef enum {
     POSTORDER,
 } TRAVERSAL_TYPE;
 
-typedef enum : unsigned int {
+typedef enum {
     SYN_TREE_ATTR_NONE = 0x00,
     SYN_TREE_ATTR_CONSTANT = 0x01,
 } SYN_TREE_ATTRIBUTE;
 
-inline constexpr SYN_TREE_ATTRIBUTE operator&(SYN_TREE_ATTRIBUTE a, SYN_TREE_ATTRIBUTE b) {
-    return static_cast<SYN_TREE_ATTRIBUTE>(static_cast<unsigned int>(a) & static_cast<unsigned int>(b));
-}
-
-inline constexpr SYN_TREE_ATTRIBUTE operator|(SYN_TREE_ATTRIBUTE a, SYN_TREE_ATTRIBUTE b) {
-    return static_cast<SYN_TREE_ATTRIBUTE>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
-}
-
-inline constexpr SYN_TREE_ATTRIBUTE operator|=(SYN_TREE_ATTRIBUTE &a, SYN_TREE_ATTRIBUTE b) { return a = a | b; }
-
-inline constexpr SYN_TREE_ATTRIBUTE operator&=(SYN_TREE_ATTRIBUTE &a, SYN_TREE_ATTRIBUTE b) { return a = a & b; }
+ENUM_BIT_CASTING(SYN_TREE_ATTRIBUTE)
 
 class SyntaxTree {
 public:
