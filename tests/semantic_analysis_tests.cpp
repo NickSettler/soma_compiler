@@ -81,13 +81,13 @@ namespace soma {
                 EXPECT_EXIT(CheckSemantics("var a = 1;"
                                            "const a = 2;",
                                            {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_REDEFINE_VARIABLE),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_REDEFINE_VARIABLE_ERROR_CODE),
                             "Variable .* is already declared");
 
                 EXPECT_EXIT(CheckSemantics("const a = 1;"
                                            "a = 2;",
                                            {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_REASSIGN_CONSTANT),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_REASSIGN_CONSTANT_ERROR_CODE),
                             "Variable .* is constant and cannot be reassigned");
             }
 
@@ -105,7 +105,7 @@ namespace soma {
                                 std::pair<std::string, SymbolTableTreeData>("c", c)});
 
                 EXPECT_EXIT(CheckSemantics("const a = 1; var b = c;", {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_UNDEFINED_VARIABLE),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_UNDEFINED_VARIABLE_ERROR_CODE),
                             "Variable .* is used before definition");
             }
         }// namespace
