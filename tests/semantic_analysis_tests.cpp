@@ -73,6 +73,16 @@ namespace soma {
 
                 a.unset_flag(SYM_TABLE_IS_CONSTANT);
                 CheckSemantics("var a = 1;", {std::pair<std::string, SymbolTableTreeData>("a", a)});
+
+                CheckSemantics("var a = 1;"
+                               "a = 12;",
+                               {std::pair<std::string, SymbolTableTreeData>("a", a)});
+
+                EXPECT_EXIT(CheckSemantics("var a = 1;"
+                                           "const a = 2;",
+                                           {}),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_REDEFINE_VARIABLE),
+                            "Variable .* is already declared");
             }
 
             TEST_F(SemanticAnalysisTests, ExpressionsWithVariables) {
