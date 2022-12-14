@@ -9,6 +9,7 @@
 #include <map>
 
 #include "../src/util/errors.h"
+#include "../src/util/types.h"
 #include "../src/lexical_analysis.h"
 #include "../src/symbol_table.cpp"
 #include "../src/semantic_analysis.cpp"
@@ -68,6 +69,7 @@ namespace soma {
             TEST_F(SemanticAnalysisTests, VariableDeclaration) {
                 SymbolTableTreeData a{};
                 a.set_flag(SYM_TABLE_IS_DEFINED | SYM_TABLE_IS_CONSTANT);
+                a.set_type(SYM_TABLE_TYPE_INT);
 
                 CheckSemantics("const a = 1;", {std::pair<std::string, SymbolTableTreeData>("a", a)});
 
@@ -92,8 +94,11 @@ namespace soma {
             TEST_F(SemanticAnalysisTests, ExpressionsWithVariables) {
                 SymbolTableTreeData a{}, b{}, c{};
                 a.set_flag(SYM_TABLE_IS_DEFINED | SYM_TABLE_IS_CONSTANT);
+                a.set_type(SYM_TABLE_TYPE_INT);
                 b.set_flag(SYM_TABLE_IS_DEFINED);
+                b.set_type(SYM_TABLE_TYPE_INT);
                 c.set_flag(SYM_TABLE_IS_DEFINED | SYM_TABLE_IS_CONSTANT);
+                c.set_type(SYM_TABLE_TYPE_FLOAT);
 
                 CheckSemantics("const a = 1;"
                                "var b = a * 1;"
