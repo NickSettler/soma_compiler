@@ -18,11 +18,10 @@ SymbolTableTreeNode::SymbolTableTreeNode(std::string *key) {
 }
 
 SymbolTableTreeNode::~SymbolTableTreeNode() {
-    if (this->left != nullptr) delete this->left;
-    if (this->right != nullptr) delete this->right;
-
     delete this->key;
     delete this->data;
+    delete this->left;
+    delete this->right;
 }
 
 void SymbolTableTreeData::set_flag(SYM_TABLE_NODE_FLAG flag) { this->flags |= flag; }
