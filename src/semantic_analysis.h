@@ -7,15 +7,27 @@
 #ifndef SOMA_COMPILER_SEMANTIC_ANALYSIS_H
 #define SOMA_COMPILER_SEMANTIC_ANALYSIS_H
 
+#include "util/types.h"
+
 class SyntaxTree;
 
+class SymbolTableTree;
+
+class SemanticAnalysisUtil {
+public:
+    static SYM_TABLE_DATA_TYPE type_checking(SYM_TABLE_DATA_TYPE type1, SYM_TABLE_DATA_TYPE type2);
+};
+
 class SemanticAnalysis {
+private:
+    SymbolTableTree *current_symbol_table;
+
 public:
     SemanticAnalysis() = default;
 
     ~SemanticAnalysis() = default;
 
-    static bool is_defined(std::string *identifier);
+    bool is_defined(std::string *identifier);
 
     void process_assign(SyntaxTree *tree);
 
