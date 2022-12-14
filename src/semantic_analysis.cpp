@@ -20,7 +20,19 @@ bool SemanticAnalysis::is_defined(std::string *identifier) {
 }
 
 void SemanticAnalysis::process_assign(SyntaxTree *tree) {
-    auto symtable_token = global_symbol_table->insert(tree->left->value);
+    SymbolTableTreeNode *symtable_token;
+
+    if (tree->attributes & SYN_TREE_ATTR_DECLARATION) {
+        if (global_symbol_table->find(tree->left->value))
+            throw SemanticAnalysisRedefineVariableError("Variable %s is already declared", tree->left->value->c_str());
+
+        symtable_token = global_symbol_table->insert(tree->left->value);
+    } else {
+        symtable_token = global_symbol_table->find(tree->left->value);
+
+        if (symtable_token == nullptr)
+            throw SemanticAnalysisUndefinedVariableError("Variable %s is not declared", tree->left->value->c_str());
+    }
 
     if (tree->attributes & SYN_TREE_ATTR_CONSTANT) symtable_token->data->set_flag(SYM_TABLE_IS_CONSTANT);
 
