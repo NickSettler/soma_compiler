@@ -158,6 +158,17 @@ SyntaxTree *SyntaxAnalysis::statement() {
             expect_token(LEX_TOKEN_SEMICOLON);
             break;
         }
+        case LEX_TOKEN_IDENTIFIER: {
+            v = new SyntaxTree(SYN_NODE_IDENTIFIER, new std::string(current_token->get_value()));
+
+            expect_token(LEX_TOKEN_IDENTIFIER);
+            expect_token(LEX_TOKEN_ASSIGN);
+
+            tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
+
+            expect_token(LEX_TOKEN_SEMICOLON);
+            break;
+        }
         default:
             throw SyntaxAnalysisError("Expected statement but found: %s", current_token->get_value().c_str());
     }
