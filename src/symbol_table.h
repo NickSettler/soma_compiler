@@ -32,6 +32,8 @@ public:
 
     void unset_flag(SYM_TABLE_NODE_FLAG flag);
 
+    void set_type(SYM_TABLE_DATA_TYPE new_type);
+
     SYM_TABLE_DATA_TYPE get_type() const;
 
     SYM_TABLE_NODE_FLAG get_flags() const;

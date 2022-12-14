@@ -29,6 +29,8 @@ void SymbolTableTreeData::set_flag(SYM_TABLE_NODE_FLAG flag) { this->flags |= fl
 
 void SymbolTableTreeData::unset_flag(SYM_TABLE_NODE_FLAG flag) { this->flags &= ~flag; }
 
+void SymbolTableTreeData::set_type(SYM_TABLE_DATA_TYPE new_type) { this->type = new_type; }
+
 SYM_TABLE_DATA_TYPE SymbolTableTreeData::get_type() const { return this->type; }
 
 SYM_TABLE_NODE_FLAG SymbolTableTreeData::get_flags() const { return this->flags; }
