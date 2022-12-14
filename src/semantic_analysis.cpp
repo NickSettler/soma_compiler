@@ -32,6 +32,10 @@ void SemanticAnalysis::process_assign(SyntaxTree *tree) {
 
         if (symtable_token == nullptr)
             throw SemanticAnalysisUndefinedVariableError("Variable %s is not declared", tree->left->value->c_str());
+
+        if (symtable_token->data->get_flags() & SYM_TABLE_IS_CONSTANT)
+            throw SemanticAnalysisReassignConstantError("Variable %s is constant and cannot be reassigned",
+                                                        tree->left->value->c_str());
     }
 
     if (tree->attributes & SYN_TREE_ATTR_CONSTANT) symtable_token->data->set_flag(SYM_TABLE_IS_CONSTANT);
