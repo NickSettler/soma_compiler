@@ -4,6 +4,7 @@
  * @date: 13.12.2022
  */
 
+#include "util/errors.h"
 #include "symbol_table.h"
 #include "syntax_analysis.h"
 #include "semantic_analysis.h"
@@ -24,11 +25,12 @@ void SemanticAnalysis::process_assign(SyntaxTree *tree) {
     if (tree->attributes & SYN_TREE_ATTR_CONSTANT) symtable_token->data->set_flag(SYM_TABLE_IS_CONSTANT);
 
     tree->right->process_tree_using(
-            [this](SyntaxTree *expression_tree) {
+            [](SyntaxTree *expression_tree) {
                 if (expression_tree->type != SYN_NODE_IDENTIFIER) return;
 
                 if (!is_defined(expression_tree->value)) {
-                    throw std::runtime_error("Semantic error: variable " + *expression_tree->value + " is not defined");
+                    throw SemanticAnalysisUndefinedVariableError("Variable %s is used before definition",
+                                                                 expression_tree->value->c_str());
                 }
             },
             POSTORDER);
