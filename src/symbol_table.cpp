@@ -18,10 +18,11 @@ SymbolTableTreeNode::SymbolTableTreeNode(std::string *key) {
 }
 
 SymbolTableTreeNode::~SymbolTableTreeNode() {
+    if (this->left != nullptr) delete this->left;
+    if (this->right != nullptr) delete this->right;
+
     delete this->key;
     delete this->data;
-    delete this->left;
-    delete this->right;
 }
 
 void SymbolTableTreeData::set_flag(SYM_TABLE_NODE_FLAG flag) { this->flags |= flag; }
@@ -34,6 +35,11 @@ SYM_TABLE_NODE_FLAG SymbolTableTreeData::get_flags() const { return this->flags;
 
 SYN_TABLE_COMPARATOR_FLAG SymbolTableTree::comparator(std::string *a, std::string *b) {
     return *a == *b ? SYN_TABLE_COMP_OP_EQ : *a < *b ? SYN_TABLE_COMP_OP_LT : SYN_TABLE_COMP_OP_GT;
+}
+
+SymbolTableTree::~SymbolTableTree() {
+    delete this->root;
+    this->root = nullptr;
 }
 
 SymbolTableTreeNode *SymbolTableTree::find(std::string *search_key, SymbolTableTreeNode *node) {
@@ -49,6 +55,7 @@ SymbolTableTreeNode *SymbolTableTree::find(std::string *search_key, SymbolTableT
         return find(search_key, node->right);
     }
 }
+
 SymbolTableTreeNode *SymbolTableTree::find(std::string *search_key) {
     if (this->root == nullptr) return nullptr;
 
