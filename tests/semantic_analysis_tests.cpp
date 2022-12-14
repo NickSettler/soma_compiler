@@ -83,6 +83,12 @@ namespace soma {
                                            {}),
                             ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_REDEFINE_VARIABLE),
                             "Variable .* is already declared");
+
+                EXPECT_EXIT(CheckSemantics("const a = 1;"
+                                           "a = 2;",
+                                           {}),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_REASSIGN_CONSTANT),
+                            "Variable .* is constant and cannot be reassigned");
             }
 
             TEST_F(SemanticAnalysisTests, ExpressionsWithVariables) {
