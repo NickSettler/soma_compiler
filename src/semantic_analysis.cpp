@@ -11,6 +11,10 @@
 
 extern SymbolTableTree *global_symbol_table;
 
+SYM_TABLE_DATA_TYPE SemanticAnalysisUtil::type_checking(SYM_TABLE_DATA_TYPE type1, SYM_TABLE_DATA_TYPE type2) {
+    return type1 > type2 ? type1 : type2;
+}
+
 bool SemanticAnalysis::is_defined(std::string *identifier) {
     if (identifier == nullptr || current_symbol_table == nullptr) return false;
 
