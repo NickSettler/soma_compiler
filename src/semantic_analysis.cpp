@@ -80,6 +80,8 @@ void SemanticAnalysis::process_assign(SyntaxTree *tree) {
             },
             POSTORDER);
 
+    symtable_token->data->set_type(get_data_type(tree->right));
+
     symtable_token->data->set_flag(SYM_TABLE_IS_DEFINED);
 }
 
