@@ -9,11 +9,7 @@
 
 #include <string>
 #include "util/enum.h"
-
-typedef enum {
-    SYM_TABLE_TYPE_INT = 0x01,
-    SYM_TABLE_TYPE_FLOAT = 0x02,
-} SYM_TABLE_DATA_TYPE;
+#include "util/types.h"
 
 ENUM_BIT_CASTING(SYM_TABLE_DATA_TYPE)
 

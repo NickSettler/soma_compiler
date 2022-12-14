@@ -37,4 +37,10 @@ typedef enum {
     LEX_TOKEN_VAR,
 } LEXICAL_TOKEN_TYPE;
 
+typedef enum {
+    SYM_TABLE_TYPE_UNKNOWN = -0x01,
+    SYM_TABLE_TYPE_INT = 0x01,
+    SYM_TABLE_TYPE_FLOAT = 0x02,
+} SYM_TABLE_DATA_TYPE;
+
 #endif// SOMA_COMPILER_TYPES_H
