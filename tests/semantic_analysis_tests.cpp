@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 
+#include "../src/util/errors.h"
 #include "../src/lexical_analysis.h"
 #include "../src/symbol_table.cpp"
 #include "../src/semantic_analysis.cpp"
@@ -86,6 +87,10 @@ namespace soma {
                                {std::pair<std::string, SymbolTableTreeData>("a", a),
                                 std::pair<std::string, SymbolTableTreeData>("b", b),
                                 std::pair<std::string, SymbolTableTreeData>("c", c)});
+
+                EXPECT_EXIT(CheckSemantics("const a = 1; var b = c;", {}),
+                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_ERROR_UNDEFINED_VARIABLE),
+                            "Variable .* is used before definition");
             }
         }// namespace
     }    // namespace tests
