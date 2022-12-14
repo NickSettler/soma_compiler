@@ -23,6 +23,31 @@ bool SemanticAnalysis::is_defined(std::string *identifier) {
     return token && token->data->get_flags() & SYM_TABLE_IS_DEFINED;
 }
 
+SYM_TABLE_DATA_TYPE SemanticAnalysis::get_data_type(SyntaxTree *tree) {
+    if (tree == nullptr) return SYM_TABLE_TYPE_UNKNOWN;
+
+    switch (tree->type) {
+        case SYN_NODE_INTEGER_LITERAL:
+            return SYM_TABLE_TYPE_INT;
+        case SYN_NODE_FLOAT_LITERAL:
+            return SYM_TABLE_TYPE_FLOAT;
+        case SYN_NODE_IDENTIFIER: {
+            auto token = current_symbol_table->find(tree->value);
+            if (token == nullptr) throw SemanticAnalysisOtherError("Undefined identifier: %s", tree->value);
+
+            return token->data->get_type();
+        }
+        case SYN_NODE_ADD:
+        case SYN_NODE_SUB:
+        case SYN_NODE_MUL:
+            return SemanticAnalysisUtil::type_checking(get_data_type(tree->left), get_data_type(tree->right));
+        case SYN_NODE_DIV:
+            return SYM_TABLE_TYPE_FLOAT;
+        default:
+            return SYM_TABLE_TYPE_UNKNOWN;
+    }
+}
+
 void SemanticAnalysis::process_assign(SyntaxTree *tree) {
     SymbolTableTreeNode *symtable_token;
 

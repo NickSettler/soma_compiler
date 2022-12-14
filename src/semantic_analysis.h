@@ -29,6 +29,8 @@ public:
 
     bool is_defined(std::string *identifier);
 
+    SYM_TABLE_DATA_TYPE get_data_type(SyntaxTree *tree);
+
     void process_assign(SyntaxTree *tree);
 
     void analyze_tree(SyntaxTree *syntax_tree);
