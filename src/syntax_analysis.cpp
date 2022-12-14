@@ -153,6 +153,7 @@ SyntaxTree *SyntaxAnalysis::statement() {
             expect_token(LEX_TOKEN_ASSIGN);
 
             tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
+            tree->attributes |= SYN_TREE_ATTR_DECLARATION;
             if (is_constant) tree->attributes |= SYN_TREE_ATTR_CONSTANT;
 
             expect_token(LEX_TOKEN_SEMICOLON);
