@@ -6,7 +6,6 @@
 
 #include <gtest/gtest.h>
 
-#include "../src/errors.cpp"
 #include "../src/lexical_analysis.cpp"
 
 namespace soma {
@@ -115,11 +114,9 @@ namespace soma {
                               LexicalToken("=", LEX_TOKEN_ASSIGN), LexicalToken("-", LEX_TOKEN_MINUS),
                               LexicalToken("+", LEX_TOKEN_PLUS)});
 
-                EXPECT_EXIT(ProcessInput("+*+", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Unknown operator: .*");
+                EXPECT_DEATH(ProcessInput("+*+", {}), "Unknown operator: .*");
 
-                EXPECT_EXIT(ProcessInput("/-", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Unknown operator: .*");
+                EXPECT_DEATH(ProcessInput("/-", {}), "Unknown operator: .*");
             }
 
             TEST_F(LexicalAnalysisTests, Integers) {
@@ -144,17 +141,13 @@ namespace soma {
                                                         LexicalToken("3e-12", LEX_TOKEN_FLOAT_LITERAL),
                                                         LexicalToken("4.52e+13", LEX_TOKEN_FLOAT_LITERAL)});
 
-                EXPECT_EXIT(ProcessInput("1.1e", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Invalid float: .*");
+                EXPECT_DEATH(ProcessInput("1.1e", {}), "Invalid float: .*");
 
-                EXPECT_EXIT(ProcessInput("1.1e-", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Invalid float: .*");
+                EXPECT_DEATH(ProcessInput("1.1e-", {}), "Invalid float: .*");
 
-                EXPECT_EXIT(ProcessInput("1.1e+", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Invalid float: .*");
+                EXPECT_DEATH(ProcessInput("1.1e+", {}), "Invalid float: .*");
 
-                EXPECT_EXIT(ProcessInput("1.1e1.1", {}), ::testing::ExitedWithCode(LEXICAL_ANALYSIS_ERROR_CODE),
-                            "Invalid float: .*");
+                EXPECT_DEATH(ProcessInput("1.1e1.1", {}), "Invalid float: .*");
             }
 
             TEST_F(LexicalAnalysisTests, Keywords) {

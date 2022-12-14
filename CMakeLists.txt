@@ -19,7 +19,10 @@ enable_testing()
 
 add_executable(
         tests
-        tests/main.cpp tests/lexical_analysis_tests.cpp tests/syntax_analysis_tests.cpp)
+        tests/main.cpp
+        tests/lexical_analysis_tests.cpp
+        tests/syntax_analysis_tests.cpp
+        tests/semantic_analysis_tests.cpp)
 
 
 target_link_libraries(
@@ -35,7 +38,9 @@ add_executable(
         soma
         src/main.cpp
         src/util/enum.h
+        src/util/types.h
+        src/util/errors.h
         src/lexical_analysis.cpp src/lexical_analysis.h
-        src/errors.cpp src/errors.h
         src/syntax_analysis.cpp src/syntax_analysis.h
-        src/symbol_table.cpp src/symbol_table.h)
+        src/symbol_table.cpp src/symbol_table.h
+        src/semantic_analysis.cpp src/semantic_analysis.h )

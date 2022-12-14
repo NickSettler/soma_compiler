@@ -11,6 +11,7 @@
 #include <string>
 #include <functional>
 #include "util/enum.h"
+#include "util/types.h"
 
 #define GET_NEXT_TOKEN                                                                                                 \
     delete current_token;                                                                                              \
@@ -65,6 +66,7 @@ typedef enum {
 typedef enum {
     SYN_TREE_ATTR_NONE = 0x00,
     SYN_TREE_ATTR_CONSTANT = 0x01,
+    SYN_TREE_ATTR_DECLARATION = 0x02,
 } SYN_TREE_ATTRIBUTE;
 
 ENUM_BIT_CASTING(SYN_TREE_ATTRIBUTE)
@@ -83,6 +85,10 @@ public:
 
     void process_tree_using(const std::function<void(SyntaxTree *)> &function, TRAVERSAL_TYPE traversal_type);
 };
+
+class LexicalAnalysis;
+
+class LexicalToken;
 
 class SyntaxAnalysis {
 private:

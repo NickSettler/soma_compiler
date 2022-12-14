@@ -9,11 +9,7 @@
 
 #include <string>
 #include "util/enum.h"
-
-typedef enum {
-    SYM_TABLE_TYPE_INT = 0x01,
-    SYM_TABLE_TYPE_FLOAT = 0x02,
-} SYM_TABLE_DATA_TYPE;
+#include "util/types.h"
 
 ENUM_BIT_CASTING(SYM_TABLE_DATA_TYPE)
 
@@ -36,6 +32,8 @@ public:
 
     void unset_flag(SYM_TABLE_NODE_FLAG flag);
 
+    void set_type(SYM_TABLE_DATA_TYPE new_type);
+
     SYM_TABLE_DATA_TYPE get_type() const;
 
     SYM_TABLE_NODE_FLAG get_flags() const;
@@ -48,26 +46,37 @@ typedef enum {
 } SYN_TABLE_COMPARATOR_FLAG;
 
 class SymbolTableTreeNode {
-private:
+public:
     std::string *key;
     SymbolTableTreeData *data;
     SymbolTableTreeNode *left;
     SymbolTableTreeNode *right;
 
-    static SYN_TABLE_COMPARATOR_FLAG comparator(std::string *a, std::string *b);
-
-public:
     explicit SymbolTableTreeNode(std::string *key);
 
     ~SymbolTableTreeNode();
+};
+
+class SymbolTableTree {
+private:
+    SymbolTableTreeNode *root = nullptr;
+
+    static SYN_TABLE_COMPARATOR_FLAG comparator(std::string *a, std::string *b);
+
+    SymbolTableTreeNode *find(std::string *search_key, SymbolTableTreeNode *node);
+
+    SymbolTableTreeNode *insert(std::string *insert_key, SymbolTableTreeNode *node);
+
+    void remove(std::string *remove_key, SymbolTableTreeNode *node);
+
+public:
+    ~SymbolTableTree();
 
     SymbolTableTreeNode *find(std::string *search_key);
 
     SymbolTableTreeNode *insert(std::string *insert_key);
 
-    SymbolTableTreeNode *remove(std::string *remove_key);
-
-    SymbolTableTreeData *get_data() const;
+    void remove(std::string *remove_key);
 };
 
 #endif// SOMA_COMPILER_SYMBOL_TABLE_H

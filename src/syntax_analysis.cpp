@@ -4,9 +4,9 @@
  * @date: 12.12.2022
  */
 
-#include "lexical_analysis.h"
 #include "syntax_analysis.h"
-#include "errors.h"
+#include "lexical_analysis.h"
+#include "util/errors.h"
 
 std::map<LEXICAL_TOKEN_TYPE, SyntaxAnalysisAttribute> attributes = {
         {LEX_TOKEN_EOF, SyntaxAnalysisAttribute("EOF", false, false, -1, (SYNTAX_ANALYSIS_NODE_TYPE) -1)},
@@ -153,7 +153,19 @@ SyntaxTree *SyntaxAnalysis::statement() {
             expect_token(LEX_TOKEN_ASSIGN);
 
             tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
+            tree->attributes |= SYN_TREE_ATTR_DECLARATION;
             if (is_constant) tree->attributes |= SYN_TREE_ATTR_CONSTANT;
+
+            expect_token(LEX_TOKEN_SEMICOLON);
+            break;
+        }
+        case LEX_TOKEN_IDENTIFIER: {
+            v = new SyntaxTree(SYN_NODE_IDENTIFIER, new std::string(current_token->get_value()));
+
+            expect_token(LEX_TOKEN_IDENTIFIER);
+            expect_token(LEX_TOKEN_ASSIGN);
+
+            tree = new SyntaxTree(SYN_NODE_ASSIGNMENT, v, expression(0));
 
             expect_token(LEX_TOKEN_SEMICOLON);
             break;
