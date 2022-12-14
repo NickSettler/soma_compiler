@@ -19,7 +19,10 @@ enable_testing()
 
 add_executable(
         tests
-        tests/main.cpp tests/lexical_analysis_tests.cpp tests/syntax_analysis_tests.cpp)
+        tests/main.cpp
+        tests/lexical_analysis_tests.cpp
+        tests/syntax_analysis_tests.cpp
+        tests/semantic_analysis_tests.cpp)
 
 
 target_link_libraries(
