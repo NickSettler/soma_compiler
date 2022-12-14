@@ -78,17 +78,15 @@ namespace soma {
                                "a = 12;",
                                {std::pair<std::string, SymbolTableTreeData>("a", a)});
 
-                EXPECT_EXIT(CheckSemantics("var a = 1;"
-                                           "const a = 2;",
-                                           {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_REDEFINE_VARIABLE_ERROR_CODE),
-                            "Variable .* is already declared");
+                EXPECT_DEATH(CheckSemantics("var a = 1;"
+                                            "const a = 2;",
+                                            {}),
+                             "Variable .* is already declared");
 
-                EXPECT_EXIT(CheckSemantics("const a = 1;"
-                                           "a = 2;",
-                                           {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_REASSIGN_CONSTANT_ERROR_CODE),
-                            "Variable .* is constant and cannot be reassigned");
+                EXPECT_DEATH(CheckSemantics("const a = 1;"
+                                            "a = 2;",
+                                            {}),
+                             "Variable .* is constant and cannot be reassigned");
             }
 
             TEST_F(SemanticAnalysisTests, ExpressionsWithVariables) {
@@ -104,9 +102,7 @@ namespace soma {
                                 std::pair<std::string, SymbolTableTreeData>("b", b),
                                 std::pair<std::string, SymbolTableTreeData>("c", c)});
 
-                EXPECT_EXIT(CheckSemantics("const a = 1; var b = c;", {}),
-                            ::testing::ExitedWithCode(SEMANTIC_ANALYSIS_UNDEFINED_VARIABLE_ERROR_CODE),
-                            "Variable .* is used before definition");
+                EXPECT_DEATH(CheckSemantics("const a = 1; var b = c;", {}), "Variable .* is used before definition");
             }
         }// namespace
     }    // namespace tests
