@@ -39,19 +39,19 @@ typedef enum {
 
 typedef enum {
     // System types
-    SYN_NODE_SEQUENCE,
-    SYN_NODE_IDENTIFIER,
-    SYN_NODE_ASSIGNMENT,
+    SYN_NODE_SEQUENCE = 0x01,
+    SYN_NODE_IDENTIFIER = 0x02,
+    SYN_NODE_ASSIGNMENT = 0x04,
 
     // Operator types
-    SYN_NODE_ADD,
-    SYN_NODE_SUB,
-    SYN_NODE_MUL,
-    SYN_NODE_DIV,
+    SYN_NODE_ADD = 0x08,
+    SYN_NODE_SUB = 0x10,
+    SYN_NODE_MUL = 0x20,
+    SYN_NODE_DIV = 0x40,
 
     // Literal types
-    SYN_NODE_INTEGER_LITERAL,
-    SYN_NODE_FLOAT_LITERAL,
+    SYN_NODE_INTEGER_LITERAL = 0x80,
+    SYN_NODE_FLOAT_LITERAL = 0x100,
 } SYNTAX_ANALYSIS_NODE_TYPE;
 
 typedef enum {
