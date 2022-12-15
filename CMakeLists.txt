@@ -37,6 +37,7 @@ gtest_discover_tests(tests)
 add_executable(
         soma
         src/main.cpp
+        src/optimiser.cpp src/optimiser.h
         src/util/enum.h
         src/util/types.h
         src/util/errors.h

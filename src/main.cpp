@@ -4,6 +4,7 @@
 #include "syntax_analysis.h"
 #include "semantic_analysis.h"
 #include "symbol_table.h"
+#include "optimiser.h"
 
 extern SymbolTableTree *global_symbol_table;
 
@@ -18,6 +19,9 @@ int main() {
 
     auto *semantic_analysis = new SemanticAnalysis();
     semantic_analysis->analyze_tree(syntax_tree);
+
+    auto *optimiser = new Optimiser(syntax_tree);
+    optimiser->optimize();
 
     printf("Done\n");
 
