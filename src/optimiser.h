@@ -8,7 +8,8 @@
 #define SOMA_COMPILER_OPTIMISER_H
 
 #include <map>
-#include <any>
+#include <string>
+#include <functional>
 #include "util/types.h"
 
 class SyntaxTree;

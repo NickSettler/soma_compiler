@@ -36,7 +36,6 @@ void Optimiser::calculate_expression(SyntaxTree *tree) {
 void Optimiser::optimize_assignment(SyntaxTree *tree) {
     tree->right->process_tree_using([&](SyntaxTree *tree) { calculate_expression(tree); }, POSTORDER);
     current_replace_variable = tree->left->value;
-    replace_variable_with_value(tree);
 }
 
 void Optimiser::optimize() {
