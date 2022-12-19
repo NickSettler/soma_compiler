@@ -38,6 +38,23 @@ typedef enum {
 } LEXICAL_TOKEN_TYPE;
 
 typedef enum {
+    // System types
+    SYN_NODE_SEQUENCE = 0x01,
+    SYN_NODE_IDENTIFIER = 0x02,
+    SYN_NODE_ASSIGNMENT = 0x04,
+
+    // Operator types
+    SYN_NODE_ADD = 0x08,
+    SYN_NODE_SUB = 0x10,
+    SYN_NODE_MUL = 0x20,
+    SYN_NODE_DIV = 0x40,
+
+    // Literal types
+    SYN_NODE_INTEGER_LITERAL = 0x80,
+    SYN_NODE_FLOAT_LITERAL = 0x100,
+} SYNTAX_ANALYSIS_NODE_TYPE;
+
+typedef enum {
     SYM_TABLE_TYPE_UNKNOWN = -0x01,
     SYM_TABLE_TYPE_INT = 0x01,
     SYM_TABLE_TYPE_FLOAT = 0x02,

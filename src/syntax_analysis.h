@@ -17,23 +17,6 @@
     delete current_token;                                                                                              \
     current_token = lexical_analysis->get_token();
 
-typedef enum {
-    // System types
-    SYN_NODE_SEQUENCE,
-    SYN_NODE_IDENTIFIER,
-    SYN_NODE_ASSIGNMENT,
-
-    // Operator types
-    SYN_NODE_ADD,
-    SYN_NODE_SUB,
-    SYN_NODE_MUL,
-    SYN_NODE_DIV,
-
-    // Literal types
-    SYN_NODE_INTEGER_LITERAL,
-    SYN_NODE_FLOAT_LITERAL,
-} SYNTAX_ANALYSIS_NODE_TYPE;
-
 class SyntaxAnalysisAttribute {
 private:
     std::string text;
