@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <functional>
+#include <vector>
 #include "util/types.h"
 
 class SyntaxTree;
@@ -24,7 +25,7 @@ const std::map<SYNTAX_ANALYSIS_NODE_TYPE, const std::function<float(float, float
 class Optimiser {
 private:
     SyntaxTree *root_tree;
-    std::string *current_replace_variable;
+    SyntaxTree *current_replace_tree;
 
 public:
     Optimiser(SyntaxTree *tree) : root_tree(tree) {}
@@ -32,6 +33,8 @@ public:
     ~Optimiser() = default;
 
     static void calculate_expression(SyntaxTree *tree);
+
+    void replace_variable_usage();
 
     void optimize_assignment(SyntaxTree *tree);
 

@@ -33,9 +33,44 @@ void Optimiser::calculate_expression(SyntaxTree *tree) {
     tree->right = nullptr;
 }
 
+void Optimiser::replace_variable_usage() {
+    std::vector<SyntaxTree> replace_trees;
+    SyntaxTree *current_tree = root_tree;
+
+    while (current_tree->left) {
+        if (current_tree->right == current_replace_tree) break;
+
+        if (current_tree->right != current_replace_tree && current_tree->right->type == SYN_NODE_ASSIGNMENT &&
+            *current_tree->right->left->value == *current_replace_tree->left->value) {
+            replace_trees.clear();
+        }
+
+        replace_trees.push_back(*current_tree);
+        current_tree = current_tree->left;
+    }
+
+    auto replacer = [&](SyntaxTree *tree) {
+        if (tree->type == SYN_NODE_IDENTIFIER && *tree->value == *current_replace_tree->left->value) {
+            tree->type = current_replace_tree->right->type;
+            tree->value = current_replace_tree->right->value;
+        }
+    };
+
+    for (auto &tree: replace_trees) {
+        auto replacing_tree = tree.right;
+
+        replacing_tree->process_tree_using(
+                [&](SyntaxTree *_tree) {
+                    if (_tree->type == SYN_NODE_ASSIGNMENT) { _tree->right->process_tree_using(replacer, INORDER); }
+                },
+                POSTORDER);
+    }
+}
+
 void Optimiser::optimize_assignment(SyntaxTree *tree) {
     tree->right->process_tree_using([&](SyntaxTree *tree) { calculate_expression(tree); }, POSTORDER);
-    current_replace_variable = tree->left->value;
+    current_replace_tree = tree;
+    replace_variable_usage();
 }
 
 void Optimiser::optimize() {
